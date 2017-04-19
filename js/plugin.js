@@ -1,72 +1,81 @@
-/*global jQuery */
-/*!
-* Lettering.JS 0.7.0
-*
-* Copyright 2010, Dave Rupert http://daverupert.com
-* Released under the WTFPL license
-* http://sam.zoy.org/wtfpl/
-*
-* Thanks to Paul Irish - http://paulirish.com - for the feedback.
-*
-* Date: Mon Sep 20 17:14:00 2010 -0600
-*/
-(function($){
-	function injector(t, splitter, klass, after) {
-		var text = t.text()
-		, a = text.split(splitter)
-		, inject = '';
-		if (a.length) {
-			$(a).each(function(i, item) {
-				inject += '<span class="'+klass+(i+1)+'" aria-hidden="true">'+item+'</span>'+after;
-			});
-			t.attr('aria-label',text)
-			.empty()
-			.append(inject)
+<!DOCTYPE html>
+<html>
+	<head>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Fluid Width Videos with Fitvids.js</title>
+        <style>
+          body {
+            background: #ddd;
+          }
 
-		}
-	}
+          video {
+            max-width: 100%;
+            height: auto;
+          }
 
+          iframe,
+          embed,
+          object {
+            max-width: 100%;
+          }
 
-	var methods = {
-		init : function() {
+          .container {
+            width: 70%;
+            padding: 5%;
+            margin:0px auto;
+            background:#fff;
+            box-shadow: 0 5px 5px rgba(0, 0, 0, 0.5);
+          }
 
-			return this.each(function() {
-				injector($(this), '', 'char', '');
-			});
+          .vendor {
+            padding: 2%;
+            background: #d1eed1;
+            margin-bottom: 2em;
+          }
 
-		},
+          .unsupported {
+            background: #fddfde;
+          }
+        </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="vendor">
+        	<iframe width="425" height="349" src="http://www.youtube.com/embed/FKWwdQu6_ok" frameborder="0" allowfullscreen></iframe>
+	      </div>
+	      <div class="vendor">
+        	<iframe src="http://player.vimeo.com/video/25708134?title=0&amp;byline=0&amp;portrait=0" width="400" height="225" frameborder="0"></iframe>
+        </div>
+        <div class="vendor">
+        	<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="437" height="288" id="viddler"><param name="movie" value="http://www.viddler.com/player/d6c37b62/" /><param name="allowScriptAccess" value="always" /><param name="allowFullScreen" value="true" /><param name="flashvars" value="fake=1"/><embed src="http://www.viddler.com/player/d6c37b62/" width="437" height="288" type="application/x-shockwave-flash" allowScriptAccess="always" allowFullScreen="true" flashvars="fake=1" name="viddler" ></embed></object>
+        </div>
+        <div class="vendor">
+        	<embed src="http://blip.tv/play/AYHCnikC" type="application/x-shockwave-flash" width="550" height="396" wmode="transparent" allowscriptaccess="always" allowfullscreen="true" ></embed>
+        </div>
+        <div class="vendor">
+<iframe frameborder="0" height="410px" src="http://www.kickstarter.com/projects/30453381/the-shape-of-design/widget/video.html" width="480px"></iframe>
+        </div>
+        <div class="vendor">
+          <iframe frameborder="0" height="380" src="http://www.kickstarter.com/projects/150422311/screencasting-a-complete-redesign/widget/card.html" width="220"></iframe>
+        </div>
+        <p>^^ The above kickstarter widget should fail.</p>
+        <div class="vendor">
+          <iframe width="520px" height="391px" src="http://socialcam.com/videos/XRMP3Y5t/embed?utm_campaign=web&utm_source=embed" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="vendor">
+          <iframe class="fitvidsignore" src="http://player.vimeo.com/video/28523422?title=0&amp;byline=0&amp;portrait=0&amp;color=4584be" width="800/embed/?moog_width=800" height="450" frameborder="0"></iframe>
+        </div>
+        <p>^^ The above vimeo embed should fail. It has a class of 'fitvidsignore'.
 
-		words : function() {
+      </div>
 
-			return this.each(function() {
-				injector($(this), ' ', 'word', ' ');
-			});
-
-		},
-
-		lines : function() {
-
-			return this.each(function() {
-				var r = "eefec303079ad17405c889e092e105b0";
-				// Because it's hard to split a <br/> tag consistently across browsers,
-				// (*ahem* IE *ahem*), we replace all <br/> instances with an md5 hash
-				// (of the word "split").  If you're trying to use this plugin on that
-				// md5 hash string, it will fail because you're being ridiculous.
-				injector($(this).children("br").replaceWith(r).end(), r, 'line', '');
-			});
-
-		}
-	};
-
-	$.fn.lettering = function( method ) {
-		// Method calling logic
-		if ( method && methods[method] ) {
-			return methods[ method ].apply( this, [].slice.call( arguments, 1 ));
-		} else if ( method === 'letters' || ! method ) {
-			return methods.init.apply( this, [].slice.call( arguments, 0 ) ); // always pass an array
-		}
-		$.error( 'Method ' +  method + ' does not exist on jQuery.lettering' );
-		return this;
-	};
-
-})(jQuery);
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      <script src="jquery.fitvids.js"></script>
+      <script>
+        // Basic FitVids Test
+        $(".container").fitVids();
+        // Custom selector and No-Double-Wrapping Prevention Test
+        $(".container").fitVids({ customSelector: "iframe[src^='http://socialcam.com']"});
+      </script>
+      </body>
+  </html>
